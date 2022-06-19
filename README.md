@@ -11,11 +11,11 @@ The maven POM file contains the required dependency for using AMQ.
 </dependency>
 ```
 
-We have added the configurations to the application.properties which is broker URL, username and password required for establishing the connection, these values can be overridden by environment variables (and configMap/Secret in OpenShift)
+We have added the configurations to the application.properties which is broker URL, username and password required for establishing the connection, these values can be overridden by environment variables (and configMap/Secret in OpenShift) these environment variables are: AMQ_URL, AMQ_USER and AMQ_PASSWORD.
 ```
-my.amq.url=${amq.url:tcp://127.0.0.1:61616}
-my.amq.user=${amq.user:amq}
-my.amq.password=${amq.password:topSecret}
+my.amq.url=${AMQ_URL:tcp://127.0.0.1:61616}
+my.amq.user=${AMQ_USER:amq}
+my.amq.password=${AMQ_PASSWORD:topSecret}
 ```
 
 ## Local Testing
