@@ -72,7 +72,8 @@ Now, let's create our broker on Openshift by using the following command:
 ```
 oc apply -f https://raw.githubusercontent.com/osa-ora/simple_java_amq/main/amq-config/broker.yaml -n amq
 ```
-This will create AMQ Broker instance based on common configurations and exposing the required port with default username/password.
+This will create AMQ Broker instance based on common configurations and exposing the required port with default username/password. You may override any of the configurations or add to it whatever required.
+
 You can access the management console by using the exposed console route.
 
 <img width="1035" alt="Screen Shot 2022-06-19 at 10 33 13" src="https://user-images.githubusercontent.com/18471537/174472670-4422cc69-2244-497e-bfd9-8db788644da3.png">
