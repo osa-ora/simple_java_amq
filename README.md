@@ -74,7 +74,7 @@ Install it to the "amq" namespace only.
 
 <img width="812" alt="Screen Shot 2022-06-19 at 09 46 51" src="https://user-images.githubusercontent.com/18471537/174471052-84f6817c-19b7-45a0-a8ea-99bc5f478d18.png">
 
-Now, let's create our broker on Openshift by using the following command:
+Now, let's create our broker on Openshift by using the following SINGLE command:
 
 ```
 oc apply -f https://raw.githubusercontent.com/osa-ora/simple_java_amq/main/amq-config/broker.yaml -n amq
@@ -96,7 +96,7 @@ oc create secret generic amq-secrets --from-literal=AMQ_USER="amq" --from-litera
 
 - Deploy our Application into OpenShift
 
-Either from the console or by command line.
+Either from the console or by command line using a SINGLE command (oc new-app)
 
 ```
 oc new-app --name=amq-client java~https://github.com/osa-ora/simple_java_amq -n amq
