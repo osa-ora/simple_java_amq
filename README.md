@@ -1,6 +1,6 @@
 # Simple Java SpringBoot AMQ Broker Example
 
-This project will expose REST services to send JMS messages to AMQ Broker and listen to these messages to demostrate both operations in simple way.
+This project will expose REST services to send JMS messages to AMQ Broker and listen to these messages to demonstrate both operations in a simple way.
 We are going to use Red Hat AMQ Broker which is based on open source Apache ActiveMQ Artemis. 
 The maven POM file contains the required dependency for using AMQ. 
 
@@ -11,7 +11,7 @@ The maven POM file contains the required dependency for using AMQ.
 </dependency>
 ```
 
-We have added the configurations to the application.properties which is broker URL, username and password required for establishing the connection, these values can be overriden by environment variables (and configMap/Secrets in OpenShift)
+We have added the configurations to the application.properties which is broker URL, username and password required for establishing the connection, these values can be overridden by environment variables (and configMap/Secret in OpenShift)
 ```
 my.amq.url=${amq.url:tcp://127.0.0.1:61616}
 my.amq.user=${amq.user:amq}
@@ -37,7 +37,7 @@ mvn package //to build the jar file of this SpringBoot app
 //or package then run
 mvn package
 java -jar target/amq-0.0.1-SNAPSHOT.jar
-//or run a specifc listening port
+//or run a specific listening port
 java -jar -Dserver.port=8083 target/amq-0.0.1-SNAPSHOT.jar
 
 ```
@@ -47,7 +47,7 @@ curl http://localhost:8080/amq/v1/send/Hello%20Mr%20Osama%20Oransa
 curl http://localhost:8080/amq/v1/list
 curl http://localhost:8080/amq/v1/reset
 ```
-You can navigae into the management console as well and check the different configurations using URL such as http://localhost:8161/console/auth/login which you can spot from the AMQ Broker logs.
+You can navigate into the management console as well and check the different configurations using URL such as http://localhost:8161/console/auth/login which you can spot from the AMQ Broker logs.
 
 
 ## Deploy to OpenShift
@@ -79,7 +79,7 @@ You can access the management console by using the exposed console route.
 
 - Create ConfigMap/Secret
 
-Now we need to create ConfigMap and Secrets for our applicatons. If you didnt' change the username and password, then you can just update the broker URL, you can get it from the service name "amq-broker-sample-all-0-svc" (if you didn't change the broker name as per the previous step).
+Now we need to create ConfigMap and Secrets for our application. If you didn't' change the username and password, then you can just update the broker URL, you can get it from the service name "amq-broker-sample-all-0-svc" (if you didn't change the broker name as per the previous step).
 
 ```
 oc create configmap amq-settings --from-literal  amq.url="tcp://${service_ip}:61616" -n amq
@@ -101,7 +101,7 @@ In case you changed the AMQ Broker username and password, make sure to update th
 
 - Test the application
 
-Use the route to execute some test cases to make sure our application is sending and reciving messages to our deployed AMQ Broker.
+Use the route to execute some test cases to make sure our application is sending and receiving messages to our deployed AMQ Broker.
 
 ```
 curl {ROUTE_URL}/amq/v1/send/Hello%20Mr%20Osama%20Oransa
@@ -109,12 +109,18 @@ curl {ROUTE_URL}/amq/v1/list
 curl {ROUTE_URL}/amq/v1/reset
 ```
 
-And it should be working fine from both browser and in the application logs.
+And it should be working fine from browser, command line and in the application logs.
 
 
 <img width="354" alt="Screen Shot 2022-06-19 at 11 32 50" src="https://user-images.githubusercontent.com/18471537/174474670-74d1b39d-f17a-4c1f-8ccb-0d57990b2cc4.png">
 
 <img width="1471" alt="Screen Shot 2022-06-19 at 11 33 26" src="https://user-images.githubusercontent.com/18471537/174474692-c4690ef8-34c3-4a0e-af28-4ddd11db5c79.png">
+
+
+## Conclusion
+We have seen how simple it is to send and receive messages from AMQ Broker using the proper dependency in our SpringBoot application and how we can deploy AMQ Broker locally and test it with the proper configurations.
+Then we saw how easily we can deploy the same AMQ Broker and our SpringBoot Application into OpenShift with the proper configurations to test the end-to-end functionality of Red Hat AMQ Broker without any hassles..
+
 
 
 
