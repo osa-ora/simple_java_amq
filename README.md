@@ -1,7 +1,14 @@
 # Simple Java SpringBoot AMQ Broker Example
 
 This project will expose REST services to send JMS messages to AMQ Broker and listen to these messages to demonstrate both operations in a simple way.
-We are going to use Red Hat AMQ Broker which is based on open source Apache ActiveMQ Artemis. 
+
+Red Hat AMQ contains many products one is the AMQ Broker which we are going to use and it is based on open source Apache ActiveMQ Artemis. 
+There is also AMQ Streams which is based on the open source project Apache Kafka. 
+
+<p align="center">
+<img align="center" src="https://user-images.githubusercontent.com/18471537/174484814-3083c022-1b24-4247-bdd7-b388056ab60b.png">
+</p>
+
 The maven POM file contains the required dependency for using AMQ. 
 
 ```
