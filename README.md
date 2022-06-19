@@ -82,7 +82,8 @@ You can access the management console by using the exposed console route.
 Now we need to create ConfigMap and Secrets for our application. If you didn't' change the username and password, then you can just update the broker URL, you can get it from the service name "amq-broker-sample-all-0-svc" (if you didn't change the broker name as per the previous step).
 
 ```
-oc create configmap amq-settings --from-literal  amq.url="tcp://${service_ip}:61616" -n amq
+oc create configmap amq-settings --from-literal  AMQ_URL="tcp://${service_ip}:61616" -n amq
+oc create secret generic amq-secrets --from-literal=AMQ_USER="amq" --from-literal=AMQ_PASSWORD="topSecret" -n amq
 ```
 
 - Deploy our Application into OpenShift
@@ -92,12 +93,9 @@ Either from the console or by command line.
 ```
 oc new-app --name=amq-client java~https://github.com/osa-ora/simple_java_amq -n amq
 oc expose svc/amq-client -n amq
+oc set env deployment/amq-client --from secret/amq-secrets 
 oc set env deployment/amq-client --from configmap/amq-settings
 ```
-In case you changed the AMQ Broker username and password, make sure to update the application deployment to reference the same credentials used in the provisioned broker as following:
-
-<img width="1319" alt="Screen Shot 2022-06-19 at 11 29 52" src="https://user-images.githubusercontent.com/18471537/174474569-e9852abc-b686-4ea6-92d2-ec404a2cd17c.png">
-
 
 - Test the application
 
