@@ -25,7 +25,8 @@ my.amq.user=${AMQ_USER:amq}
 my.amq.password=${AMQ_PASSWORD:topSecret}
 ```
 
-## Local Testing
+## Local Setup
+In this section, we will try to setup everything locally to test the developer experience, then we will switch to setup it over OpenShift which is the main purpose of this post.  
 
 First, you need to download Red Hat AMQ Broker, once downloaded, extract it and then create your first broker
 ```
