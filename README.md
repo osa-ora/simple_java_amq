@@ -82,6 +82,29 @@ oc apply -f https://raw.githubusercontent.com/osa-ora/simple_java_amq/main/amq-c
 ```
 This will create AMQ Broker instance based on common configurations and exposing the required port with default username/password. You may override any of the configurations or add to it whatever required.
 
+You can have many options for acceptors, we selected the artemis one in our configurations:
+```
+acceptors:
+    - anycastPrefix: jms.queue.
+      expose: true
+      multicastPrefix: /topic/
+      name: all
+      port: 61616
+      protocols: openwire
+      sniHost: localhost
+```
+We can have other acceptors as well such as:
+
+```
+<acceptors>
+    <acceptor name="artemis">tcp://0.0.0.0:61616?tcpSendBufferSize=1048576;tcpReceiveBufferSize=1048576</acceptor>
+    <acceptor name="amqp">tcp://0.0.0.0:5672?protocols=AMQP</acceptor>
+    <acceptor name="stomp">tcp://0.0.0.0:61613?protocols=STOMP</acceptor>
+    <acceptor name="hornetq">tcp://0.0.0.0:5445?protocols=HORNETQ,STOMP</acceptor>
+    <acceptor name="mqtt">tcp://0.0.0.0:1883?protocols=MQTT</acceptor>
+</acceptors>
+```
+
 You can access the management console by using the exposed console route.
 
 <img width="1035" alt="Screen Shot 2022-06-19 at 10 33 13" src="https://user-images.githubusercontent.com/18471537/174472670-4422cc69-2244-497e-bfd9-8db788644da3.png">
