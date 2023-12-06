@@ -29,6 +29,9 @@ public class SenderConfig {
     @Value("${my.amq.password}")
     private String password;
 
+    @Value("${my.amq.expiry}")
+    private Integer expiry; 
+
     public ActiveMQConnectionFactory senderActiveMQConnectionFactory() {
         ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory(broker);
         activeMQConnectionFactory.setUser(user);
@@ -43,7 +46,10 @@ public class SenderConfig {
 
     @Bean
     public JmsTemplate jmsTemplate() {
-        return new JmsTemplate(cachingConnectionFactory());
+        JmsTemplate myjmsTemplate = new JmsTemplate(cachingConnectionFactory());
+        myjmsTemplate.setExplicitQosEnabled(true);
+        myjmsTemplate.setTimeToLive(expiry); 
+        return myjmsTemplate;
     }
 
     @Bean
