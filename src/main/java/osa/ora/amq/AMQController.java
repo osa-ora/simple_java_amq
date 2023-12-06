@@ -30,7 +30,7 @@ public class AMQController {
     public static ArrayList<String> messages = new ArrayList<String>();
 
     /**
-     * Rest Service to send a JMS message
+     * Rest Service to send a JMS message to a queue
      *
      * @param msg the message content
      * @return true
@@ -40,6 +40,19 @@ public class AMQController {
     public String sendMessage(@PathVariable(value = "msg") String message) {
         System.out.println("Sending message: " + message);
         sender.send(message, AmqApplication.QUEUE_NAME);
+        return "{\"Result\":true}";
+    }
+    /**
+     * Rest Service to send a JMS message to a topic
+     *
+     * @param msg the message content
+     * @return true
+     */
+    @GetMapping(path = "/publish/{msg}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public String publishMessage(@PathVariable(value = "msg") String message) {
+        System.out.println("Sending topic message: " + message);
+        sender.publish(message, AmqApplication.QUEUE_NAME);
         return "{\"Result\":true}";
     }
 
