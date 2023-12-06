@@ -65,6 +65,47 @@ curl http://localhost:8080/amq/v1/reset
 ```
 You can navigate into the management console as well and check the different configurations using URL such as http://localhost:8161/console/auth/login which you can spot from the AMQ Broker logs.
 
+Note: You can disable the message queue to see the messages, trace the expiration and movement of the messages into the expiration queue.
+
+<img width="920" alt="Screenshot 2023-12-06 at 17 00 50" src="https://github.com/osa-ora/simple_java_amq/assets/18471537/a8c2df28-a44c-4414-9ee9-abdcc222433f">
+
+This is the expiry queue:
+<img width="1786" alt="Screenshot 2023-12-06 at 16 55 00" src="https://github.com/osa-ora/simple_java_amq/assets/18471537/9afdbd53-6ffe-49b6-9c57-1b8232b51262">
+
+In the expiry queue, you can resend or retry the message, move the message to another queue or just delete it (them).
+
+<img width="1187" alt="Screenshot 2023-12-06 at 16 58 40" src="https://github.com/osa-ora/simple_java_amq/assets/18471537/d31a11d9-d753-4f54-bd72-6e9173b171c2">
+
+By default the queue or topic will be auto-created but you can explicitly configure them, go to the broker name folder/etc and update the broker file and add any queue (any-cast) or topic (multi-cast) and their configurations, then start the broker.  
+
+For example:
+```
+<addresses>
+         <address name="DLQ">
+            <anycast>
+               <queue name="DLQ" />
+            </anycast>
+         </address>
+         <address name="ExpiryQueue">
+            <anycast>
+               <queue name="ExpiryQueue" />
+            </anycast>
+         </address>
+        <address name="myConfigured">
+            <anycast>
+               <queue name="myConfigured" />
+            </anycast>
+         </address>
+        <address name="my-topic">
+            <multicast>
+                 <queue name="my-topic">
+                    <durable>true</durable>
+                 </queue>
+            </multicast>
+        </address>
+      </addresses>
+```
+
 
 ## Deploy to OpenShift
 - Create OpenShift project 
