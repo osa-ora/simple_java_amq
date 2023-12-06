@@ -23,6 +23,8 @@ We have added the configurations to the application.properties which is broker U
 my.amq.url=${AMQ_URL:tcp://127.0.0.1:61616}
 my.amq.user=${AMQ_USER:amq}
 my.amq.password=${AMQ_PASSWORD:topSecret}
+my.amq.expiry=5000
+use.topic=false
 ```
 
 ## Local Setup
@@ -41,6 +43,7 @@ Now, we have the broker up and running and we can run our application:
 ```
 mvn test // to run the unit tests
 mvn clean test spring-boot:run // to build, test and run the application
+//update application properties to use either topic or queue and AmqApplication.java with queue/topic name
 mvn package //to build the jar file of this SpringBoot app
 //or package then run
 mvn package
@@ -51,8 +54,13 @@ java -jar -Dserver.port=8083 target/amq-0.0.1-SNAPSHOT.jar
 ```
 Use the REST services to send/get messages or use it directly from the browser
 ```
+//for sending to queue
 curl http://localhost:8080/amq/v1/send/Hello%20Mr%20Osama%20Oransa
+//for publishing to a topic
+curl http://localhost:8080/amq/v1/publish/Hello%20Mr%20Osama%20Oransa
+//to list recievd messages
 curl http://localhost:8080/amq/v1/list
+//to clear the recived messages
 curl http://localhost:8080/amq/v1/reset
 ```
 You can navigate into the management console as well and check the different configurations using URL such as http://localhost:8161/console/auth/login which you can spot from the AMQ Broker logs.
