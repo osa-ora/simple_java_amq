@@ -106,6 +106,11 @@ For example:
       </addresses>
 ```
 
+Finally, you can create the queue or topic from the management console.  
+
+<img width="1785" alt="Screenshot 2023-12-06 at 18 22 25" src="https://github.com/osa-ora/simple_java_amq/assets/18471537/9b2015e4-9446-46d7-883c-eaa780b857f9">
+
+
 
 ## Deploy to OpenShift
 - Create OpenShift project 
