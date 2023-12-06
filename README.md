@@ -106,10 +106,11 @@ For example:
       </addresses>
 ```
 
-Finally, you can create the queue or topic from the management console.  
+Finally, you can create the queue or topic from the management console.  First create addreess then create the topic/queue.  
 
 <img width="1785" alt="Screenshot 2023-12-06 at 18 22 25" src="https://github.com/osa-ora/simple_java_amq/assets/18471537/9b2015e4-9446-46d7-883c-eaa780b857f9">
 
+<img width="1779" alt="Screenshot 2023-12-06 at 18 27 10" src="https://github.com/osa-ora/simple_java_amq/assets/18471537/af8aa29c-3e4e-4f3f-8367-fc4e8fb87292">
 
 
 ## Deploy to OpenShift
