@@ -30,11 +30,18 @@ public class RecieverConfig {
     @Value("${my.amq.password}")
     private String password;
 
+    @Value("${use.topic}")
+    private Boolean useTopic;
+
+
     @Bean
     public ActiveMQConnectionFactory receiverActiveMQConnectionFactory() {
         ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory(broker);
         activeMQConnectionFactory.setUser(user);
         activeMQConnectionFactory.setPassword(password);
+        if(useTopic) {
+           activeMQConnectionFactory.setClientID("my-broker-id");
+        }
         return activeMQConnectionFactory;
     }
 
@@ -42,8 +49,13 @@ public class RecieverConfig {
     public DefaultJmsListenerContainerFactory jmsListenerContainerFactory() {
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
         factory.setConnectionFactory(receiverActiveMQConnectionFactory());
+        if(useTopic) {
+           factory.setPubSubDomain(true);
+           factory.setSubscriptionDurable(true);
+        }
         return factory;
     }
+
 
     @Bean
     public AMQReciever receiver() {
