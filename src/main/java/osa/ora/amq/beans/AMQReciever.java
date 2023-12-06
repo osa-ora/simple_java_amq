@@ -17,7 +17,8 @@ public class AMQReciever {
     
     @JmsListener(destination = AmqApplication.QUEUE_NAME)
     public void receive(String message) {
-        System.out.println("Received message="+ message);
+        System.out.println("Received message="+ message+" in "+AmqApplication.QUEUE_NAME);
         AMQController.messages.add(message);
     }
-}    
+
+} 
