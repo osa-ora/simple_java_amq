@@ -53,6 +53,11 @@ public class RecieverConfig {
            factory.setPubSubDomain(true);
            factory.setSubscriptionDurable(true);
         }
+        factory.setSessionAcknowledgeMode(javax.jms.Session.CLIENT_ACKNOWLEDGE);
+        factory.setErrorHandler(t -> {
+        	System.err.println("An error has occurred in the transaction");
+        	System.err.println(t.getCause().getMessage());
+    	});
         return factory;
     }
 
