@@ -120,6 +120,15 @@ You will see, many delivery failure in the application logs, then if you check t
 
 <img width="1491" alt="Screenshot 2023-12-07 at 11 02 43" src="https://github.com/osa-ora/simple_java_amq/assets/18471537/22401c9f-ebcf-4a82-8c7b-db9ae7dd5dc7">
 
+To control the deadletter queue name and redelivery settings, use the broker.xml to configure all these detals in the address settings section, for example for our my-queue
+```
+<address-setting match="my-queue">
+    <dead-letter-address>DLQ</dead-letter-address>
+    <expiry-address>ExpiryQueue</expiry-address>
+    <redelivery-delay>2000</redelivery-delay>
+    ...
+ </address-setting>
+```
 
 ## Deploy to OpenShift
 - Create OpenShift project 
