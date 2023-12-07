@@ -112,6 +112,14 @@ Finally, you can create the queue or topic from the management console.  First c
 
 <img width="1779" alt="Screenshot 2023-12-06 at 18 27 10" src="https://github.com/osa-ora/simple_java_amq/assets/18471537/af8aa29c-3e4e-4f3f-8367-fc4e8fb87292">
 
+To test deadletter situation, where messages are failed to process and acknowledge by the client after trials to deliver it, it get moved to DLQ queue, simply send a message with the text "test-dead-letter"
+```
+curl http://localhost:8080/amq/v1/send/test-dead-letter
+```
+You will see, many delivery failure in the application logs, then if you check the console, you can see the DLQ with the message, where you can do further analysis and then move it, delete it or retry it.
+
+<img width="1491" alt="Screenshot 2023-12-07 at 11 02 43" src="https://github.com/osa-ora/simple_java_amq/assets/18471537/22401c9f-ebcf-4a82-8c7b-db9ae7dd5dc7">
+
 
 ## Deploy to OpenShift
 - Create OpenShift project 
