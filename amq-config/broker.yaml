@@ -24,6 +24,7 @@ spec:
     size: 1
     messageMigration: true
     managementRBACEnabled: true
+    persistenceEnabled: true
     journalType: nio
     image: placeholder
   addressSettings:
