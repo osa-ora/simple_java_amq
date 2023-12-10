@@ -1,0 +1,10 @@
+apiVersion: broker.amq.io/v1beta1
+kind: ActiveMQArtemisAddress
+metadata:
+  name: artemis-address-queue
+  namespace: amq
+spec:
+  addressName: my-queue
+  queueName: my-queue
+  routingType: anycast
+  removeFromBrokerOnDelete: true
