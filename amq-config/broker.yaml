@@ -22,7 +22,7 @@ spec:
         memory: 512Mi
     storage:
       size: 4Gi
-    size: 2
+    size: 1
     messageMigration: true
     managementRBACEnabled: true
     journalType: nio
@@ -30,9 +30,9 @@ spec:
   addressSettings:
     addressSetting:
       - match: '#'
-        deadLetterAddress: myDeadLetterQ
+        deadLetterAddress: DLQ
         maxDeliveryAttempts: 5
-        redeliveryDelay: 2000
+        redeliveryDelay: 500
   console:
     expose: true
   upgrades:
