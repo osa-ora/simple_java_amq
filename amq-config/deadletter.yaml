@@ -1,0 +1,9 @@
+kind: ActiveMQArtemisAddress
+apiVersion: broker.amq.io/v1beta1
+metadata:
+  name: my-dead-letter-queue
+  namespace: test
+spec:
+  addressName: myDeadLetterQ
+  queueName: myDeadLetterQ
+  routingType: anycast
