@@ -1,4 +1,4 @@
-apiVersion: broker.amq.io/v2alpha5
+apiVersion: broker.amq.io/v1beta1
 kind: ActiveMQArtemis
 metadata:
   name: amq-broker-sample
@@ -12,14 +12,7 @@ spec:
       port: 61616
       protocols: openwire
       sniHost: localhost
-  addressSettings: {}
-  adminPassword: topSecret
-  adminUser: amq
-  console:
-    expose: true
   deploymentPlan:
-    size: 1
-    podSecurity: {}
     resources:
       limits:
         cpu: 500m
@@ -27,15 +20,23 @@ spec:
       requests:
         cpu: 250m
         memory: 512Mi
-    readinessProbe: {}
-    messageMigration: false
-    extraMounts: {}
-    managementRBACEnabled: true
-    livenessProbe: {}
-    journalType: nio
-    image: placeholder
     storage:
       size: 4Gi
+    size: 2
+    messageMigration: true
+    managementRBACEnabled: true
+    journalType: nio
+    image: placeholder
+  addressSettings:
+    addressSetting:
+      - match: '#'
+        deadLetterAddress: myDeadLetterQ
+        maxDeliveryAttempts: 5
+        redeliveryDelay: 2000
+  console:
+    expose: true
   upgrades:
     enabled: false
     minor: false
+  adminPassword: topSecret
+  adminUser: amq
