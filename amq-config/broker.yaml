@@ -2,7 +2,6 @@ apiVersion: broker.amq.io/v1beta1
 kind: ActiveMQArtemis
 metadata:
   name: amq-broker-sample
-  namespace: amq
 spec:
   acceptors:
     - anycastPrefix: jms.queue.
@@ -30,9 +29,9 @@ spec:
   addressSettings:
     addressSetting:
       - match: '#'
-        deadLetterAddress: DLQ
+        deadLetterAddress: myDeadLetterQ
         maxDeliveryAttempts: 5
-        redeliveryDelay: 500
+        redeliveryDelay: 2000
   console:
     expose: true
   upgrades:
