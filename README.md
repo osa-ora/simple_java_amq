@@ -237,6 +237,14 @@ Now, the messages will be retired then moved to the dead letter queue.
 <img width="1784" alt="Screenshot 2023-12-10 at 12 24 36" src="https://github.com/osa-ora/simple_java_amq/assets/18471537/715ff025-322b-4e3e-8b2d-0951975abf72">
 
 
+To run the full demo end to end on OpenShift, you can run the script in the script folder: 
+
+```
+curl https://raw.githubusercontent.com/osa-ora/simple_java_amq/main/script/init_demo.sh > init.sh
+chmod +x init.sh
+./init.sh my-amq-project  
+```
+
 ## Conclusion
 We have seen how simple it is to send and receive messages from AMQ Broker using the proper dependency in our SpringBoot application and how we can deploy AMQ Broker locally and test it with the proper configurations.
 Then we saw how easily we can deploy the same AMQ Broker and our SpringBoot Application into OpenShift with the proper configurations to test the end-to-end functionality of Red Hat AMQ Broker without any hassles..
