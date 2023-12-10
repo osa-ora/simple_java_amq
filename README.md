@@ -151,8 +151,12 @@ Now, let's create our broker on Openshift by using the following SINGLE command:
 
 ```
 oc apply -f https://raw.githubusercontent.com/osa-ora/simple_java_amq/main/amq-config/broker.yaml -n amq
+oc apply -f https://raw.githubusercontent.com/osa-ora/simple_java_amq/main/amq-config/address-config.yaml -n amq
+oc apply -f https://raw.githubusercontent.com/osa-ora/simple_java_amq/main/amq-config/deadletter.yaml -n amq
 ```
 This will create AMQ Broker instance based on common configurations and exposing the required port with default username/password. You may override any of the configurations or add to it whatever required.
+Second line will also create an address with a queue named "my-queue" that will be used by our application, instead of using the auto-create setting. 
+
 
 You can have many options for acceptors, we selected the artemis one in our configurations:
 ```
@@ -181,12 +185,16 @@ You can access the management console by using the exposed console route.
 
 <img width="1035" alt="Screen Shot 2022-06-19 at 10 33 13" src="https://user-images.githubusercontent.com/18471537/174472670-4422cc69-2244-497e-bfd9-8db788644da3.png">
 
+You can see the configured Address and its queue is available in the console.  
+
+<img width="1779" alt="Screenshot 2023-12-10 at 11 35 46" src="https://github.com/osa-ora/simple_java_amq/assets/18471537/b91d1e15-0514-4bb9-8393-cff34eeb5bfe">
+
 - Create ConfigMap/Secret
 
 Now we need to create ConfigMap and Secrets for our application. If you didn't' change the username and password, then you can just update the broker URL, you can get it from the service name "amq-broker-sample-all-0-svc" (if you didn't change the broker name as per the previous step).
 
 ```
-oc create configmap amq-settings --from-literal  AMQ_URL="tcp://${service_ip}:61616" -n amq
+oc create configmap amq-settings --from-literal  AMQ_URL="tcp://amq-broker-sample-all-0-svc:61616" -n amq
 oc create secret generic amq-secrets --from-literal=AMQ_USER="amq" --from-literal=AMQ_PASSWORD="topSecret" -n amq
 ```
 
@@ -209,6 +217,7 @@ Use the route to execute some test cases to make sure our application is sending
 curl {ROUTE_URL}/amq/v1/send/Hello%20Mr%20Osama%20Oransa
 curl {ROUTE_URL}/amq/v1/list
 curl {ROUTE_URL}/amq/v1/reset
+curl {ROUTE_URL}/amq/v1/send/test-dead-letter
 ```
 
 And it should be working fine from browser, command line and in the application logs.
@@ -217,6 +226,15 @@ And it should be working fine from browser, command line and in the application 
 <img width="354" alt="Screen Shot 2022-06-19 at 11 32 50" src="https://user-images.githubusercontent.com/18471537/174474670-74d1b39d-f17a-4c1f-8ccb-0d57990b2cc4.png">
 
 <img width="1471" alt="Screen Shot 2022-06-19 at 11 33 26" src="https://user-images.githubusercontent.com/18471537/174474692-c4690ef8-34c3-4a0e-af28-4ddd11db5c79.png">
+
+Now, dead letter messages will be routed to expiry queue as the expiration configuration is shorted then retrial period, to change this go to the broker configuration and update:
+```
+        redeliveryDelay: 500
+```
+
+Now, the messages will be retired then moved to the dead letter queue.
+
+<img width="1784" alt="Screenshot 2023-12-10 at 12 24 36" src="https://github.com/osa-ora/simple_java_amq/assets/18471537/715ff025-322b-4e3e-8b2d-0951975abf72">
 
 
 ## Conclusion
