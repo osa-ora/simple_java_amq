@@ -1,0 +1,57 @@
+apiVersion: broker.amq.io/v1beta1
+kind: ActiveMQArtemis
+metadata:
+  name: amq-broker-sample
+  namespace: openshift-operators
+spec:
+  acceptors:
+    - anycastPrefix: mqtt.queue.
+      expose: true
+      multicastPrefix: /topic/
+      name: my-mqtt
+      port: 1883
+      protocols: mqtt
+      sniHost: localhost
+    - anycastPrefix: jms.queue.
+      expose: true
+      multicastPrefix: /topic/
+      name: jms-all
+      port: 61616
+      protocols: openwire
+      sniHost: localhost
+  deploymentPlan:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 512Mi
+    storage:
+      size: 4Gi
+    size: 1
+    messageMigration: true
+    managementRBACEnabled: true
+    persistenceEnabled: true
+    journalType: nio
+    image: placeholder
+  addressSettings:
+    addressSetting:
+      - match: '#'
+        deadLetterAddress: myDeadLetterQ
+        maxDeliveryAttempts: 5
+        redeliveryDelay: 2000
+        autoCreateAddresses: true
+        autoCreateDeadLetterResources: true
+        autoCreateExpiryResources: true
+        autoCreateJmsQueues: true
+        autoCreateJmsTopics: true
+        autoCreateQueues: true
+        autoDeleteAddresses: true
+  console:
+    expose: true
+  upgrades:
+    enabled: false
+    minor: false
+  adminPassword: topSecret
+  adminUser: amq
